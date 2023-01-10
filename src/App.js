@@ -89,7 +89,7 @@ function Threads() {
 
   return(
     <div>
-      <h1>新着スレッド</h1>
+      <h1 className='text-center'>新着スレッド</h1>
       <ThreadItem titles={titles} />
     </div>
   )
@@ -100,7 +100,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Header></Header>
-
             <Routes>
                 <Route path="/" element={<Threads />} />
                 <Route path="/thread/new" element={<CreateNewThread />} />
