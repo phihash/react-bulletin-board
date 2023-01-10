@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react'
 import './App.css';
 import {  BrowserRouter, useLocation, Routes,  Route, useParams, Link} from 'react-router-dom';
+import Header from './components/Header';
 
 function ThreadItem(props){
   const {titles} = props;
@@ -32,10 +33,10 @@ function Post(){
         "post": textMessage
       })
     })
-    console.log("s");
-    setTextMessage("");
+    setTextMessage((pre) => {
+      return "";
+    } );
   }
-
 
   const detectTextMessage = (e) => {
     setTextMessage(e.target.value);
@@ -94,15 +95,7 @@ function Threads() {
   )
 }
 
-function Header(){
 
-  return(
-    <header className="App-header">
-    <p>掲示板</p>
-    <Link to='/thread/new'>スレッドを立てる</Link>
-    </header>
-  )
-}
 
 function Create(){
 
