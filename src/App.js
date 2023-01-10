@@ -2,10 +2,10 @@ import  { useEffect, useState } from 'react'
 import './App.css';
 import {  BrowserRouter, useLocation, Routes,  Route, useParams, Link} from 'react-router-dom';
 import Header from './components/Header';
+import CreateNewThread from './components/createNewThread';
 
 function ThreadItem(props){
   const {titles} = props;
-
   return(
     <div>
       {titles.map((title) => {
@@ -95,38 +95,6 @@ function Threads() {
   )
 }
 
-
-
-function Create(){
-
-    const [text,setText] = useState("");
-
-    const createThread = async () => {
-    const response  = await fetch(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads`,{
-      method: 'POST',
-      body: JSON.stringify({
-        "title": text
-      })
-    });
-    const data = await response.json();
-    console.log(response);
-    console.log(data);
-    setText("");
-  }
-    const detectForm = (e) => {
-      setText(e.target.value);
-    }
-
-  return(
-    <>
-      <h1>スレッド新規作成</h1>
-      <input type="text" onChange={detectForm} value={text} placeholder='スレッドタイトル' />
-      <Link to='/'>TOPへ戻る</Link>
-      <button onClick={createThread}>作成</button>
-    </>
-  )
-}
-
 function App() {
   return (
     <div className="App">
@@ -135,14 +103,13 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Threads />} />
-                <Route path="/thread/new" element={<Create />} />
+                <Route path="/thread/new" element={<CreateNewThread />} />
                 <Route path="/thread/:id/posts" element={<Post />} />
             </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
 
 
 export default App;
