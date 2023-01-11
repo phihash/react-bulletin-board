@@ -1,8 +1,9 @@
 import  { useEffect, useState } from 'react'
 import './App.css';
-import {  BrowserRouter, useLocation, Routes,  Route, useParams, Link} from 'react-router-dom';
+import {  BrowserRouter,  Routes,  Route, Link} from 'react-router-dom';
 import Header from './components/Header';
 import CreateNewThread from './components/createNewThread';
+import Post from './components/Post';
 
 function ThreadItem(props){
   const {titles} = props;
@@ -16,59 +17,6 @@ function ThreadItem(props){
          )
       })}
     </div>
-  )
-}
-
-function Post(){
-  const {id} = useParams();
-  const location = useLocation();
-  const {title} = location.state;
-  const [textMessage,setTextMessage] = useState("");
-  const [comments,setComments] = useState([]);
-
-  const createComment = async () => {
-    await fetch(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads/${id}/posts`,{
-      method:'POST',
-      body: JSON.stringify({
-        "post": textMessage
-      })
-    })
-    setTextMessage((pre) => {
-      return "";
-    } );
-  }
-
-  const detectTextMessage = (e) => {
-    setTextMessage(e.target.value);
-  }
-
-  useEffect(() => {
-    (async() => {
-      const response  = await fetch(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads/${id}/posts`,{
-        method: 'GET'
-      });
-      if(response.status === 200){
-        const data = await response.json();
-        setComments(data.posts);
-      }
-    })()
-  },[id]);
-
-  return(
-    <>
-      <h1>{title}</h1>
-      <div>
-        {comments && comments.map((comment) => {
-         return(
-            <div key={comment.id} className="comment-item">
-              <p>{comment.post}</p>
-            </div>
-         )
-      })}
-      </div>
-      <textarea onChange={detectTextMessage} name="" id="" cols="30" rows="10" placeholder='投稿しよう'></textarea>
-      <button onClick={createComment}>投稿する</button>
-    </>
   )
 }
 
@@ -89,7 +37,7 @@ function Threads() {
 
   return(
     <div>
-      <h1 className='text-center'>新着スレッド</h1>
+      <h1 className='text-center margin-top'>新着スレッド</h1>
       <ThreadItem titles={titles} />
     </div>
   )

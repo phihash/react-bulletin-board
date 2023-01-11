@@ -33,27 +33,29 @@ function Post(){
     setTextMessage(e.target.value);
   }
 
-
-
   useEffect(() => {
     loadComment()
   },[]);
 
   return(
-    <>
-      <h1 className="text-center">{title}</h1>
-      <div>
-        {comments && comments.map((comment) => {
-         return(
-            <div key={comment.id} className="comment-item">
-              <p>{comment.post}</p>
-            </div>
-         )
-      })}
+    <div className="d-flex">
+      <div className="comment-list">
+        <h1 className="text-center">{title}</h1>
+        <div>
+          {comments && comments.map((comment) => {
+          return(
+              <div key={comment.id} className="comment-item">
+                <p>{comment.post}</p>
+              </div>
+          )
+        })}
+        </div>
       </div>
-      <textarea onChange={detectTextMessage} value={textMessage} name="" id="" cols="30" rows="10" placeholder='投稿しよう'></textarea>
-      <button onClick={createComment}>投稿する</button>
-    </>
+      <div className="form-area">
+        <textarea className="text-area d-block" onChange={detectTextMessage} value={textMessage} name="" id="" cols="20" rows="6" placeholder='投稿しよう'></textarea>
+        <button className="button d-block" onClick={createComment}>投稿する</button>
+      </div>
+    </div>
   )
 }
 
